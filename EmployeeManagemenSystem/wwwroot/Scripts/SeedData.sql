@@ -1,15 +1,14 @@
-INSERT INTO "Degrees" ("Name") VALUES 
+INSERT INTO "degrees" ("name") VALUES 
 ('Ingeniero'),
 ('Soporte Técnico'),
 ('Analista'),
 ('Coordinador'),
 ('Desarrollador'),
 ('Auxiliar'),
-('Administrador'),
-('Técnico')
+('Administrador')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO "Departments" ("Name") VALUES 
+INSERT INTO "departments" ("name") VALUES 
 ('Logística'),
 ('Marketing'),
 ('Recursos Humanos'),
@@ -19,14 +18,15 @@ INSERT INTO "Departments" ("Name") VALUES
 ('Ventas')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO "EducationLevels" ("Name") VALUES 
+INSERT INTO "educationlevels" ("name") VALUES 
 ('Profesional'),
 ('Tecnólogo'),
 ('Maestría'),
-('Especialización')
+('Especialización'),
+('Técnico')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO "StatusEmployees" ("Status") VALUES 
+INSERT INTO "statusemployees" ("status") VALUES 
 ('Vacaciones'),
 ('Activo'),
 ('Inactivo')

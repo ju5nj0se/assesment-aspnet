@@ -1,6 +1,8 @@
 using JuanJoseHernandez.Constants;
 using JuanJoseHernandez.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace JuanJoseHernandez.Data
 {
@@ -14,6 +16,19 @@ namespace JuanJoseHernandez.Data
             // Seed Roles
             await SeedRoleAsync(roleManager, Roles.Admin);
             await SeedRoleAsync(roleManager, Roles.User);
+
+            // Execute SQL Seed Script
+            var dbContext = serviceProvider.GetRequiredService<AppDbContext>();
+            // Check if data already exists to avoid duplicates (naive check)
+            if (!dbContext.Degrees.Any())
+            {
+                var scriptPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Scripts", "SeedData.sql");
+                if (File.Exists(scriptPath))
+                {
+                    var script = await File.ReadAllTextAsync(scriptPath);
+                    await dbContext.Database.ExecuteSqlRawAsync(script);
+                }
+            }
 
             // Seed Admin User
             var adminEmail = "admin@gmail.com";
