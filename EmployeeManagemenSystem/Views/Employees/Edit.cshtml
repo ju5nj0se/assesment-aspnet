@@ -1,0 +1,140 @@
+@model JuanJoseHernandez.Data.Entities.User
+@{
+    ViewData["Title"] = Model.Id == null ? "Nuevo Empleado" : "Editar Empleado";
+    var isEdit = Model.Id != null;
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <h4 class="mb-0 fw-bold text-primary">
+                        <i class="bi @(isEdit ? "bi-pencil-square" : "bi-person-plus") me-2"></i>@ViewData["Title"]
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                <form asp-action="@(isEdit ? "Edit" : "Create")" method="post">
+                        @if (isEdit) { <input type="hidden" asp-for="Id" /> }
+                         @if (ViewData.ModelState.ErrorCount > 0)
+                         {
+                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                 <strong>Por favor corrija los siguientes errores:</strong>
+                                 <ul class="mb-0 mt-2">
+                                     @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                     {
+                                         <li>@error.ErrorMessage</li>
+                                     }
+                                 </ul>
+                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                             </div>
+                         }
+
+                        <div class="row g-3">
+                            <!-- Datos Personales -->
+                            <div class="col-12 mt-4"><h6 class="text-uppercase text-muted small fw-bold border-bottom pb-2">Información Personal</h6></div>
+                            
+                            <div class="col-md-6">
+                                <label asp-for="Document" class="form-label">Documento</label>
+                                <input asp-for="Document" class="form-control bg-light" />
+                                <span asp-validation-for="Document" class="text-danger small"></span>
+                            </div>
+                             <div class="col-md-6">
+                                <label asp-for="Names" class="form-label">Nombres</label>
+                                <input asp-for="Names" class="form-control" />
+                                <span asp-validation-for="Names" class="text-danger small"></span>
+                            </div>
+                             <div class="col-md-6">
+                                <label asp-for="LastNames" class="form-label">Apellidos</label>
+                                <input asp-for="LastNames" class="form-control" />
+                                <span asp-validation-for="LastNames" class="text-danger small"></span>
+                            </div>
+                             <div class="col-md-6">
+                                <label asp-for="BirthDate" class="form-label">Fecha de Nacimiento</label>
+                                <input asp-for="BirthDate" class="form-control" type="date" />
+                                <span asp-validation-for="BirthDate" class="text-danger small"></span>
+                            </div>
+                             <div class="col-md-6">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for="Email" class="form-control" type="email" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                            @if (!isEdit)
+                            {
+                                <div class="col-md-6">
+                                    <label class="form-label">Contraseña (Opcional)</label>
+                                    <input name="password" type="password" class="form-control" placeholder="Dejar vacía para sin contraseña" />
+                                </div>
+                            }
+
+                             <div class="col-md-6">
+                                <label asp-for="Telephone" class="form-label">Teléfono</label>
+                                <input asp-for="Telephone" class="form-control" />
+                                <span asp-validation-for="Telephone" class="text-danger small"></span>
+                            </div>
+                             <div class="col-12">
+                                <label asp-for="Direction" class="form-label">Dirección</label>
+                                <input asp-for="Direction" class="form-control" />
+                                <span asp-validation-for="Direction" class="text-danger small"></span>
+                            </div>
+
+                             <!-- Información Laboral -->
+                            <div class="col-12 mt-4"><h6 class="text-uppercase text-muted small fw-bold border-bottom pb-2">Información Laboral</h6></div>
+
+                            <div class="col-md-6">
+                                <label asp-for="DepartmentId" class="form-label">Departamento</label>
+                                <select asp-for="DepartmentId" class="form-select" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))">
+                                    <option value="">-- Seleccionar --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="DegreeId" class="form-label">Cargo</label>
+                                <select asp-for="DegreeId" class="form-select" asp-items="@(new SelectList(ViewBag.Degrees, "Id", "Name"))">
+                                    <option value="">-- Seleccionar --</option>
+                                </select>
+                            </div>
+                              <div class="col-md-6">
+                                <label asp-for="EducationLevelId" class="form-label">Nivel Educativo</label>
+                                <select asp-for="EducationLevelId" class="form-select" asp-items="@(new SelectList(ViewBag.EducationLevels, "Id", "Name"))">
+                                    <option value="">-- Seleccionar --</option>
+                                </select>
+                            </div>
+                             <div class="col-md-6">
+                                <label asp-for="StatusId" class="form-label">Estado</label>
+                                <select asp-for="StatusId" class="form-select" asp-items="@(new SelectList(ViewBag.Statuses, "Id", "Status"))">
+                                    <option value="">-- Seleccionar --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Salary" class="form-label">Salario</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input asp-for="Salary" class="form-control" type="number" step="0.01" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="DateEntry" class="form-label">Fecha Ingreso</label>
+                                <input asp-for="DateEntry" class="form-control" type="date" />
+                            </div>
+
+                             <div class="col-12">
+                                <label asp-for="Profile" class="form-label">Perfil Profesional</label>
+                                <textarea asp-for="Profile" class="form-control" rows="3"></textarea>
+                            </div>
+
+
+                            <div class="col-12 mt-4 d-flex justify-content-end gap-2">
+                                <a asp-action="Index" class="btn btn-light rounded-pill px-4">Cancelar</a>
+                                <button type="submit" class="btn btn-primary rounded-pill px-4">@((isEdit ? "Actualizar" : "Guardar"))</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

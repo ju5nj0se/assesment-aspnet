@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Panel de Administración";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky pt-3">
+                <h5 class="px-3 text-muted">MENÚ</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Employees" asp-action="Index">
+                            <i class="bi bi-people"></i> Empleados
+                        </a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link" asp-controller="Excel" asp-action="Upload">
+                            <i class="bi bi-file-earmark-excel"></i> Cargar Datos desde excel
+                        </a>
+                    </li>
+                </ul>
+                
+                <hr>
+                
+                <form asp-action="Logout" method="post" class="px-3">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <!-- Header -->
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Panel de Administración</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <span class="badge bg-primary">@User.Identity?.Name</span>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="mb-4 d-flex gap-2">
+                <a asp-controller="Excel" asp-action="Upload" class="btn btn-success shadow-sm">
+                    <i class="bi bi-file-earmark-excel me-2"></i>Cargar Masiva
+                </a>
+                <a asp-controller="Employees" asp-action="Index" class="btn btn-primary shadow-sm">
+                    <i class="bi bi-people me-2"></i>Gestionar Empleados
+                </a>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary">
+                        <div class="card-body">
+                            <h5 class="card-title">Empleados</h5>
+                            <p class="card-text display-6">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-success">
+                        <div class="card-body">
+                            <h5 class="card-title">Departamentos</h5>
+                            <p class="card-text display-6">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            <h5 class="card-title">Activos</h5>
+                            <p class="card-text display-6">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-warning">
+                        <div class="card-body">
+                            <h5 class="card-title">Inactivos</h5>
+                            <p class="card-text display-6">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Actividad Reciente</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted">No hay actividad reciente para mostrar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<style>
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 48px 0 0;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .sidebar .nav-link.active {
+        color: #0d6efd;
+    }
+
+    .sidebar .nav-link:hover {
+        color: #0d6efd;
+    }
+</style>

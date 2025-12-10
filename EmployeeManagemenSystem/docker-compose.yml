@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    container_name: employee-system-app
+    restart: always
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=assesment;Username=postgres;Password=admin123
+      - Jwt__Key=SuperSecretKeypwjfkL2352352352352352352352_MustBeLongerThan32Chars
+      - Jwt__Issuer=http://localhost:5000
+      - Jwt__Audience=http://localhost:5000
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    container_name: employee-system-db
+    restart: always
+    environment:
+      - POSTGRES_DB=assesment
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
