@@ -1,108 +1,110 @@
-# Sistema de Gestión de Empleados (Employee Management System)
+# Employee Management System
 
-Sistema web robusto para la gestión integral de empleados, desarrollado con **ASP.NET Core 9** siguiendo una arquitectura limpia y profesional.
+A robust web system for integral employee management, developed with **ASP.NET Core 9** following a clean and professional architecture.
 
-## 🚀 Características Principales
-- **Arquitectura Limpia**: Separación de responsabilidades mediante el patrón **Repository-Service**.
-- **Gestión de Empleados**: CRUD completo, generación de hojas de vida en PDF.
-- **Importación Masiva**: Carga de usuarios desde archivos Excel con validaciones.
-- **Seguridad**: Autenticación y autorización robusta con **ASP.NET Identity**.
-- **API REST**: Endpoints seguros con autenticación JWT.
-- **Documentación API**: Swagger integrado y configurado.
+## 🚀 Key Features
+- **Clean Architecture**: Separation of concerns using the **Repository-Service** pattern.
+- **Employee Management**: Full CRUD, PDF resume generation.
+- **Bulk Import**: Load users from Excel files with validation.
+- **Security**: Robust authentication and authorization with **ASP.NET Identity**.
+- **REST API**: Secure endpoints with JWT authentication.
+- **API Documentation**: Integrated and configured Swagger.
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technology Stack
 - **Backend**: .NET 9 (C#)
-- **Base de Datos**: PostgreSQL (Entity Framework Core)
+- **Database**: PostgreSQL (Entity Framework Core)
 - **Frontend**: ASP.NET Core MVC (Razor Views) + Bootstrap
-- **Contenedores**: Docker & Docker Compose
-- **Librerías**: 
+- **Containers**: Docker & Docker Compose
+- **Libraries**: 
   - `EPPlus` (Excel)
   - `iText7` (PDF)
   - `Swashbuckle` (Swagger)
 
 ---
 
-## 💻 Ejecución Local (Desarrollo)
+## 💻 Local Execution (Development)
 
-### Prerrequisitos
+### Prerequisites
 - .NET SDK 9.0
-- PostgreSQL instalado y corriendo.
+- PostgreSQL installed and running.
 
-### Pasos
-1. **Configurar Base de Datos**:
-   Ajusta la cadena de conexión en `appsettings.json` (`ConnectionStrings:DefaultConnection`).
+### Steps
+1. **Configure Database**:
+   Adjust the connection string in `appsettings.json` (`ConnectionStrings:DefaultConnection`).
 
-2. **Ejecutar Migraciones**:
+2. **Run Migrations**:
    ```bash
    dotnet ef database update
    ```
 
-3. **Ejecutar la Aplicación**:
+3. **Run Application**:
    ```bash
    dotnet run
    ```
-   Accede a: `http://localhost:5093` (o el puerto indicado en consola).
+   Access at: `http://localhost:5093` (or the port indicated in the console).
 
 ---
 
-## 🐳 Ejecución con Docker (Recomendado)
+## 🐳 Docker Execution (Recommended)
 
-El proyecto incluye configuración completa para desplegarse junto con su base de datos usando Docker.
+The project includes full configuration to be deployed along with its database using Docker.
 
-### Prerrequisitos
+### Prerequisites
 - Docker Desktop / Docker Engine
-- Docker Compose
+- Docker Compose (v2 recommended)
 
-### Instrucciones Paso a Paso
+### Step-by-Step Instructions
 
-1. **Construir y Desplegar**:
-   Ejecuta el siguiente comando en la raíz del proyecto:
+1. **Build and Deploy**:
+   Run the following command in the project root:
    ```bash
-   docker-compose up --build -d
+   docker compose up --build -d
    ```
 
-2. **Verificar**:
-   Asegúrate de que los contenedores estén corriendo:
+2. **Verify**:
+   Ensure containers are running:
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 
-3. **Acceder**:
-   - **Aplicación Web**: [http://localhost:5000](http://localhost:5000)
+3. **Access**:
+   - **Web Application**: [http://localhost:5000](http://localhost:5000)
    - **Swagger UI**: [http://localhost:5000/swagger](http://localhost:5000/swagger)
+   - **Database External Access**: Port `3030` (Host) -> `5432` (Container)
 
-   > **Nota**: Las migraciones y la creación de datos semilla (usuario Admin) se ejecutan automáticamente al iniciar el contenedor.
+   > **Note**: Migrations and data seeding (Admin user, Catalog data) are executed automatically when the container starts.
 
-4. **Credenciales por Defecto**:
-   - **Admin App**: `admin@gmail.com` / `admin123`
-   - **Base de Datos**: `postgres` / `admin123`
+4. **Default Credentials**:
+   - **App Admin**: `admin@gmail.com` / `admin123`
+   - **Database**: `postgres` / `admin123`
 
-5. **Detener**:
+5. **Stop**:
    ```bash
-   docker-compose down
+   docker compose down
    ```
+   *To stop and clean up volumes (resets DB):* `docker compose down -v`
 
 ---
 
 ## 📡 API Endpoints
 
-La aplicación expone una API RESTful documentada.
+The application exposes a documented RESTful API.
 
-### Autenticación
-- **GET** `/api/auth/departments`: Listar departamentos (Público).
-- **POST** `/api/auth/register`: Registrar nuevo empleado (Público).
-- **POST** `/api/auth/login`: Login con Email + Documento (Retorna JWT).
+### Authentication
+- **GET** `/api/auth/departments`: List departments (Public).
+- **POST** `/api/auth/register`: Register new employee (Public).
+- **POST** `/api/auth/login`: Login with Email + Document (Returns JWT).
 
-### Empleados (Requiere Header `Authorization: Bearer <Token>`)
-- **GET** `/api/me`: Obtener perfil completo del usuario autenticado.
-- **GET** `/api/me/resume`: Descargar hoja de vida en PDF.
+### Employees (Requires Header `Authorization: Bearer <Token>`)
+- **GET** `/api/me`: Get full profile of authenticated user.
+- **GET** `/api/me/resume`: Download resume in PDF.
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Project Structure
 
-- **Controllers**: Controladores MVC y API (`/Api`).
-- **Services**: Lógica de negocio (`/Implementations`, `/Interfaces`).
-- **Data/Repositories**: Acceso a datos (`/Implementations`, `/Interfaces`).
-- **DTOs**: Objetos de transferencia de datos.
-- **Views**: Vistas Razor para el frontend administrativo.
+- **Controllers**: MVC and API Controllers (`/Api`).
+- **Services**: Business Logic (`/Implementations`, `/Interfaces`).
+- **Data/Repositories**: Data Access (`/Implementations`, `/Interfaces`).
+- **DTOs**: Data Transfer Objects.
+- **Views**: Razor Views for the administrative frontend.
